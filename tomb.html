@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <mata charset="utf-8"></mata>
+        <title>City on Clouds——To Those Lives</title>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <style>
+            .tomb{
+                top: 0px;
+                background: url("http://3drnf.github.io/tomb.png") center center no-repeat;
+                transform:scale(3,3);
+                padding:165px 158px;
+                text-align: center;
+                line-height: 0%;
+                font-size: 9px;
+            }
+
+
+            </style>
+
+
+
+
+<script>
+function nameask() {
+    var name = prompt("祂的名字是什么？");
+    console.log('name'  + '  ' + typeof(name) + '  ' + name);
+    if (name.length == 0){
+    document.getElementById("name").innerHTML = "某个小可爱";
+    name = alert('抱歉但是名字不可为空(。・＿・。)ﾉ');
+    }else if(name.length >= 9) {
+    alert('抱歉但是名字最好在9字一下哦(。・＿・。)ﾉ');
+    var a = confirm('确定要用这个名字吗？显示效果可能不好哦');
+    if(a){
+        document.getElementById("name").innerHTML = name;
+    }else{
+        document.getElementById("name").innerHTML = "某个小可爱";
+    }
+} else{
+    document.getElementById("name").innerHTML = name;
+}
+}
+
+function textask() {
+    var text = prompt("祂的愿望是什么？");
+    console.log('text' + '  ' + typeof(text) + '  ' + text);
+    if (text.length == 0){
+    document.getElementById("text").innerHTML = "是个小天使！";
+    alert('抱歉但是墓志铭不可为空(。・＿・。)ﾉ');
+}else if(text.length >= 10) {
+    alert('抱歉但是愿望最好在10字一下哦(。・＿・。)ﾉ');
+    var b = confirm('确定要用这个愿望吗？显示效果可能不好哦');
+    if(b){
+        document.getElementById("text").innerHTML = text;
+    }else{
+        document.getElementById("text").innerHTML = "是个小天使！";
+    }
+} else{
+    document.getElementById("text").innerHTML = text;
+}
+}
+
+</script>
+    <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
+                data-toggle="dropdown">
+            菜单
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">主页</a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">我的</a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">写信</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#">设置
+                    <div style="transform:scale(1,1);"><button onclick="textask()">祂的愿望是？</button><button onclick="nameask()">祂的名字是？</button></div></a>
+            </li>
+        </ul>    </div>
+        <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+<div class="tomb">
+<h6 id="name">anyLive</h6>
+<h6 id="text">anyTexts</h6>
+</div>
+
+</body>
+</html>
