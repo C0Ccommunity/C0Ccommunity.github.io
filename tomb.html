@@ -3,17 +3,279 @@
     <head>
         <mata charset="utf-8"></mata>
         <title>City on Clouds——To Those Lives</title>
-        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+ 
         <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            //初始化
+        $(window).load(function () {
+            $("#sunny").hide();
+            $("#rainy").hide();
+        });
+        </script>
     </head>
     <body>
         <style>
+            /* 初始化 */
+    * {
+        margin: 0;
+        font-family: Georgia, 'Times New Roman', Times, serif
+    }    
+    body{
+        /* 100%的窗口高度 */
+        height: 100vh;
+        /* 弹性布局 水平 + 垂直居中 */
+        --bg-color:#ffffff;
+    background-color: var(--bg-color);
+    }
+    
+    .container{
+        width: 700px;
+        display: flex;
+        /* 让两个div中间距离相等 */
+        justify-content: space-around;
+    }
+    
+    /* 晴 */
+    .sunny{
+        /* 相对定位 */
+        position: relative;
+        width: 100px;
+        height: 100px;
+        /* 弹性布局 水平 + 垂直居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 太阳 */
+    .sunny .sun{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--bg-color);
+        box-shadow: 0 0 0 6px orange;
+        /* 执行动画 :动画名  时长  线性的  无限次播放 */
+        animation: sunny 10s linear infinite;
+    }
+    
+    /* 光线 */
+    .sunny .sun .rays{
+        /* 绝对定位 */
+        position: absolute;
+        top: -32px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 18px;
+        background-color: yellow;
+        box-shadow: 0 86px yellow;
+        border-radius: 4px;
+    }
+    
+    .sunny .sun .rays::before,
+    .sunny .sun .rays::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 18px;
+        background-color: yellow;
+        box-shadow: 0 86px yellow;
+        border-radius: 4px;
+        transform: rotate(60deg);    
+        transform-origin: 50% 52px;
+    }
+    .sunny .sun .rays::before{
+        transform: rotate(-60deg);    
+    }
+    
+    
+    /* 雨天 */
+    .rainy{
+        position: relative;
+        width: 100px;
+        height: 100px;
+        /* 弹性布局 水平 + 垂直居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;    
+    }
+    
+    /* 云朵 */
+    .rainy .cloud{
+        width: 60px;
+        height: 60px;
+        /* --bg-color:red; */
+        background-color: var(--bg-color);
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: -35px 11px 0 -11px var(--bg-color),
+            33px 15px 0 -15px var(--bg-color),
+            0 0 0 6px lightgray,
+            -35px 11px 0 -5px lightgray,
+            33px 15px 0 -9px lightgray;
+    }
+    /* 让云朵下边为直边 */
+    .rainy .cloud::after{
+        content: "";
+        width: 73px;
+        height: 16px;
+        background-color: var(--bg-color);
+        box-shadow: 0 6px 0 0 lightgray;
+        position: absolute;
+        bottom: 0;
+        left: -8px;
+    }
+    
+    /* 雨滴背景范围 */
+    .rainy .rain{
+        width: 60px;
+        height: 60px;
+        background-color: var(--bg-color);
+        position: absolute;
+        top: 55%;
+        left: 20%;
+    }
+    
+    /* 雨滴 */
+    .rainy .rain::after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        background-color: #0cf;
+        border-radius: 100% 0 60% 50% / 60% 0 100% 50%;
+        box-shadow: 10px 14px 0 -2px rgba(255, 255, 255, 0.2),
+            -14px 18px 0 -2px rgba(255, 255, 255, 0.2),
+            -22px -2px 0 rgba(255, 255, 255, 0.2);
+        transform: rotate(-28deg);
+        margin: -16px 0 0 -4px;
+        /* 执行动画 */
+        animation: rainy 2s linear infinite;
+    }
+    
+    /* 多云 */
+    .cloudy{
+        position: relative;
+        width: 100px;
+        height: 100px;
+        /* 弹性布局 水平 + 垂直居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;      
+    }
+    
+    /* 云朵 */
+    .cloudy .cloud{
+        z-index: 1;
+        width: 60px;
+        height: 60px;
+        /* --bg-color:red; */
+        background-color: var(--bg-color);
+        position: absolute;
+        border-radius: 50%;
+        box-shadow: -35px 11px 0 -11px var(--bg-color),
+        33px 15px 0 -15px var(--bg-color),
+        0 0 0 6px lightgray,
+        -35px 11px 0 -5px lightgray,
+        33px 15px 0 -9px lightgray;
+    }
+    
+    /* 让云朵下边为直边 */
+    .cloudy .cloud::after{
+        content: "";
+        width: 73px;
+        height: 16px;
+        background-color: var(--bg-color);
+        box-shadow: 0 6px 0 0 lightgray;
+        position: absolute;
+        bottom: 0;
+        left: -8px;
+    }
+    
+    /* 小云朵 */
+    .cloudy .cloud:nth-child(2){
+        z-index: 0;
+        background-color: #fff;
+        box-shadow: -35px 11px 0 -11px #fff,
+        33px 15px 0 -15px #fff,
+        0 0 0 6px #fff,
+        -35px 11px 0 -5px #fff,
+        33px 15px 0 -9px #fff;
+        opacity: 0.3;
+        transform: scale(0.5) translate(96px,-48px);
+        /* 执行动画 */
+        animation: cloudy 3s linear infinite;
+    }
+    /* 小云朵的下面 */
+    .cloudy .cloud:nth-child(2)::after{
+        background-color: #fff;
+    }
+    
+    
+    
+    /* 定义一个动画 */
+    /* 太阳 */
+    @keyframes sunny{
+        0%{
+            transform: rotate(0);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+    
+    /* 雨滴 */
+    @keyframes rainy{
+        0%{
+            background-color: #0cf;
+            box-shadow:  10px 14px 0 -2px rgba(255, 255, 255, 0.2),
+                -14px 18px 0 -2px rgba(255, 255, 255, 0.2),
+                -22px -2px 0 rgba(255, 255, 255, 0.2);
+        }
+        25%{
+            box-shadow:  10px 14px 0 -2px rgba(255, 255, 255, 0.2),
+                -14px 18px 0 -2px #0cf,
+                -22px -2px 0 rgba(255, 255, 255, 0.2);
+        }
+        50%{
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow:  10px 14px 0 -2px #0cf,
+                -14px 18px 0 -2px rgba(255, 255, 255, 0.2),
+                -22px -2px 0 rgba(255, 255, 255, 0.2);
+        }
+        100%{
+            box-shadow:  10px 14px 0 -2px rgba(255, 255, 255, 0.2),
+                -14px 18px 0 -2px rgba(255, 255, 255, 0.2),
+                -22px -2px 0 #0cf;
+        }
+    }
+    
+    /* 小云朵浮动 */
+    @keyframes cloudy{
+        0%{
+            opacity: 0;
+        }
+        50%{
+            opacity: 0.3;
+        }
+        100%{
+            opacity: 0;
+            transform: scale(0.5) translate(-200%,-48px);
+        }
+    }
+    
+        </style>
+        <style>
             .tomb{
-                top: 0px;
-                background: url("http://3drnf.github.io/tomb.png") center center no-repeat;
-                transform:scale(3,3);
-                padding:165px 158px;
+                background: url("http://c0ccommunity.github.io/images/tomb.png") center center no-repeat;
+                transform:scale(2,2);
+                padding:50px 1px;
                 text-align: center;
                 line-height: 0%;
                 font-size: 9px;
@@ -64,6 +326,22 @@ function textask() {
 }
 }
 
+function whetherChangeSunny() {
+$("#sunny").show();
+$("#rainy").hide();
+}
+function whetherChangeRainy() {
+$("#sunny").hide();
+$("#rainy").show();
+}
+function tombShapeChange(){
+    var tombIs = confirm('确定要切换样式吗？点击确定或取消来切换两种墓碑样式')
+    if(tombIs){
+        document.getElementById("tomb").style.backgroundImage('https://c0ccommunity.github.io/images/tomball.png')
+    }else{
+        document.getElementById("tomb").style.backgroundImage = "https://c0ccommunity.github.io/images/tomball.png"
+    }
+}
 </script>
     <div class="dropdown">
         <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
@@ -73,10 +351,10 @@ function textask() {
         </button>
         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
             <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="#">主页</a>
+                <a role="menuitem" tabindex="-1" href="index.html">主页</a>
             </li>
             <li role="presentation">
-                <a role="menuitem" tabindex="-1" href="#">我的</a>
+                <a role="menuitem" tabindex="-1" href="#" >我的</a>
             </li>
             <li role="presentation">
                 <a role="menuitem" tabindex="-1" href="#">写信</a>
@@ -84,14 +362,46 @@ function textask() {
             <li role="presentation" class="divider"></li>
             <li role="presentation">
                 <a role="menuitem" tabindex="-1" href="#">设置
-                    <div style="transform:scale(1,1);"><button onclick="textask()">祂的愿望是？</button><button onclick="nameask()">祂的名字是？</button></div></a>
+                    <div style="transform:scale(1,1);">
+                <button onclick="textask()">祂的愿望是？</button><button onclick="nameask()">祂的名字是？</button>
             </li>
-        </ul>    </div>
-        <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-<div class="tomb">
+        </ul></div></a>
+
+
+        <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
+                    data-toggle="dropdown">
+                自定义
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" onclick="tombShapeChange()">墓碑样式切换
+                </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1">天气切换<button onclick="whetherChangeSunny()">晴天</button><button onclick="whetherChangeRainy()">雨天</button>
+                </li>
+            </ul></div></a>
+        <p><br><br><br></p>
+        <div class="container" id="all">
+            <!-- 晴天 -->
+            <div class="sunny" id="sunny">
+                <div class="sun" id="sunny">
+                    <div class="rays" id="sunny"></div>
+                </div>
+            </div>
+            <!-- 雨天 -->
+            <div class="rainy" id="rainy">
+                <div class="cloud" id="rainy"></div>
+                <div class="rain" id="rainy"></div>
+            </div>
+        </div>
+        <p><br><br><br><br><br></p>
+<div class="tomb" id="tomb">
 <h6 id="name">anyLive</h6>
 <h6 id="text">anyTexts</h6>
 </div>
-
+</div>
 </body>
 </html>
